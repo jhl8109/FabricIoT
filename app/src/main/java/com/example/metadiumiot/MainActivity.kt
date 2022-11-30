@@ -1,21 +1,45 @@
 package com.example.metadiumiot
 
-import android.content.Intent
+import android.bluetooth.BluetoothClass.Device
+import android.content.Context
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.metahackathon.DeviceAdapter
 import com.example.metahackathon.ItemClickListener
-import com.example.metahackathon.MyRecyclerViewAdapter
-import com.example.metahackathon.RecyclerViewData
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+import com.google.gson.GsonBuilder
+import com.google.gson.reflect.TypeToken
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var devicePrefs : SharedPreferences
+    private lateinit var editor : SharedPreferences.Editor
+
+    companion object {
+        var listDatas : ArrayList<DeviceData> = arrayListOf()
+
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         supportActionBar?.title = "Smart Devices"
+
+        devicePrefs = this.getSharedPreferences("devices",Context.MODE_PRIVATE)
+        editor = devicePrefs.edit()
+
+//        listDatas.add(DeviceData("1", "One","A","010-0000-0001"))
+//        listDatas.add(DeviceData("2", "Two","B","010-0000-0002"))
+//        listDatas.add(DeviceData("3", "Three","C","010-0000-0003"))
+//
+
+        //putPrefData(listDatas)
+
         // create an instance of the Normal Floating Action Button
         // and register with the appropriate ID
         val fab: ExtendedFloatingActionButton = findViewById(R.id.extendedFAB)
@@ -26,28 +50,15 @@ class MainActivity : AppCompatActivity() {
         val recyclerView: RecyclerView = findViewById(R.id.recyclerView)
 
         // create list of RecyclerViewData
-        var recyclerViewData = listOf<RecyclerViewData>()
-        recyclerViewData = recyclerViewData + RecyclerViewData("1", "One")
-        recyclerViewData = recyclerViewData + RecyclerViewData("2", "Two")
-        recyclerViewData = recyclerViewData + RecyclerViewData("3", "Three")
-        recyclerViewData = recyclerViewData + RecyclerViewData("4", "Four")
-        recyclerViewData = recyclerViewData + RecyclerViewData("5", "Five")
-        recyclerViewData = recyclerViewData + RecyclerViewData("6", "Six")
-        recyclerViewData = recyclerViewData + RecyclerViewData("7", "Seven")
-        recyclerViewData = recyclerViewData + RecyclerViewData("8", "Eight")
-        recyclerViewData = recyclerViewData + RecyclerViewData("9", "Nine")
-        recyclerViewData = recyclerViewData + RecyclerViewData("10", "Ten")
-        recyclerViewData = recyclerViewData + RecyclerViewData("11", "Eleven")
-        recyclerViewData = recyclerViewData + RecyclerViewData("12", "Twelve")
-        recyclerViewData = recyclerViewData + RecyclerViewData("13", "Thirteen")
-        recyclerViewData = recyclerViewData + RecyclerViewData("14", "Fourteen")
-        recyclerViewData = recyclerViewData + RecyclerViewData("15", "Fifteen")
+
+        listDatas = getPrefData()
+        Log.e("create", listDatas.toString())
 
         // create a vertical layout manager
         val layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
         // create instance of MyRecyclerViewAdapter
-        val myRecyclerViewAdapter = MyRecyclerViewAdapter(recyclerViewData)
+        val myRecyclerViewAdapter = DeviceAdapter(listDatas)
 
         // attach the adapter to the recycler view
         recyclerView.adapter = myRecyclerViewAdapter
@@ -61,11 +72,12 @@ class MainActivity : AppCompatActivity() {
 
         //
         myRecyclerViewAdapter.setItemClickListener(object : ItemClickListener{
-            override fun onClick(value: RecyclerViewData) {
-                makeToast("cliecked")
+            override fun onClick(value: DeviceData) {
+                makeToast(value.toString())
             }
         })
         fab.setOnClickListener {
+            Log.e("current" , listDatas.toString())
             val dialog = HomeDialog(this)
             dialog.showDialog()
 //            val intent = Intent(applicationContext, FormActivity::class.java)
@@ -99,6 +111,32 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         })
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+    }
+    private fun getPrefData() : ArrayList<DeviceData>{
+        var makeGson = GsonBuilder().create()
+        var listType : TypeToken<MutableList<DeviceData>> = object : TypeToken<MutableList<DeviceData>>() {}
+
+        // 저장되어 있는 객체 json 반환
+        var strContact = devicePrefs.getString("deviceList", "")
+        // list 형태로 변환
+        var datas : ArrayList<DeviceData> = makeGson.fromJson(strContact,listType.type)
+        Log.e("prefdata",datas.toString())
+        return datas
+    }
+    private fun putPrefData(putDatas : ArrayList<DeviceData>) {
+        var makeGson = GsonBuilder().create()
+        // 저장 타입 지정
+        var listType : TypeToken<MutableList<DeviceData>> = object : TypeToken<MutableList<DeviceData>>() {}
+        Log.e("put",putDatas.toString())
+        // 데이터를 Json 형태로 변환
+        var strContact = makeGson.toJson(putDatas, listType.type)
+        // Json 으로 변환한 객체 저장
+        editor.putString("deviceList", strContact)
     }
 
     private fun makeToast(message: String) {

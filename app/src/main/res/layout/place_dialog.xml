@@ -9,7 +9,7 @@
         android:id="@+id/textView1"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:text="Smart Home 등록"
+        android:text="Smart Device 등록"
         android:textColor="#C8000000"
         android:textSize="30dp"
         android:gravity="bottom"
@@ -23,19 +23,42 @@
 
 
     <EditText
-        android:id="@+id/username"
+        android:id="@+id/device_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="4dp"
         android:layout_marginTop="16dp"
         android:layout_marginRight="4dp"
         android:layout_marginBottom="4dp"
-        android:hint="이름"
+        android:hint="디바이스 명"
 
         android:inputType="textEmailAddress" />
 
     <EditText
-        android:id="@+id/phoneNumber"
+        android:id="@+id/mac_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginBottom="4dp"
+        android:hint="맥 주소"
+
+        android:inputType="textEmailAddress" />
+
+    <EditText
+        android:id="@+id/owner_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginBottom="4dp"
+        android:hint="소유주"
+
+        android:inputType="textEmailAddress" />
+    <EditText
+        android:id="@+id/owner_phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="4dp"
@@ -43,18 +66,6 @@
         android:layout_marginRight="4dp"
         android:layout_marginBottom="4dp"
         android:hint="전화번호"
-
-        android:inputType="textEmailAddress" />
-
-    <EditText
-        android:id="@+id/location"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="4dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginRight="4dp"
-        android:layout_marginBottom="4dp"
-        android:hint="거주지"
 
         android:inputType="textEmailAddress" />
 

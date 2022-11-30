@@ -16,25 +16,45 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tvNumber"
+        android:id="@+id/device"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/tvNumbersInText"
         app:layout_constraintStart_toEndOf="@+id/imageView"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="1" />
+        tools:text="device" />
 
     <TextView
-        android:id="@+id/tvNumbersInText"
+        android:id="@+id/mac_address"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/tvNumber"
-        app:layout_constraintTop_toBottomOf="@+id/tvNumber"
-        tools:text="One" />
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="@+id/device"
+        app:layout_constraintTop_toBottomOf="@+id/device"
+        tools:text="mac_address" />
+
+    <TextView
+        android:id="@+id/owner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="@+id/device"
+        app:layout_constraintTop_toBottomOf="@+id/mac_address"
+        tools:text="owner" />
+
+    <TextView
+        android:id="@+id/phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="@+id/device"
+        app:layout_constraintTop_toBottomOf="@+id/owner"
+        tools:text="phone" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
