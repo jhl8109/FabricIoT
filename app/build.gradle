@@ -9,7 +9,6 @@ android {
 
     defaultConfig {
         applicationId "com.example.metadiumiot"
-        minSdk 21
         targetSdk 32
         versionCode 1
         versionName "1.0"
@@ -33,6 +32,7 @@ android {
 }
 
 dependencies {
+    implementation 'org.hyperledger.fabric:fabric-gateway-java:2.2.0'
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.1'

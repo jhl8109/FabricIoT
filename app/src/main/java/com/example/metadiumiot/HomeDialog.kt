@@ -3,9 +3,11 @@ package com.example.metadiumiot
 import android.app.Dialog
 import android.content.Context
 import android.content.SharedPreferences.Editor
+import android.os.Build
 import android.util.Log
 import android.view.WindowManager
 import android.widget.EditText
+import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatButton
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
@@ -53,17 +55,18 @@ class HomeDialog (context: Context)
         }
 
     }
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun putPrefData(putDatas : ArrayList<DeviceData>) {
         var makeGson = GsonBuilder().create()
         // 저장 타입 지정
         var listType : TypeToken<MutableList<DeviceData>> = object : TypeToken<MutableList<DeviceData>>() {}
-        Log.e("put",putDatas.toString())
         // 데이터를 Json 형태로 변환
         var strContact = makeGson.toJson(putDatas, listType.type)
         // Json 으로 변환한 객체 저장
         editor.putString("deviceList", strContact)
-
         editor.commit()
+
+        FabricSDK().executeTrade()
     }
 
     interface OnDialogClickListener

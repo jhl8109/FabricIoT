@@ -52,8 +52,6 @@ class MainActivity : AppCompatActivity() {
         // create list of RecyclerViewData
 
         listDatas = getPrefData()
-        Log.e("create", listDatas.toString())
-
         // create a vertical layout manager
         val layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
@@ -77,7 +75,6 @@ class MainActivity : AppCompatActivity() {
             }
         })
         fab.setOnClickListener {
-            Log.e("current" , listDatas.toString())
             val dialog = HomeDialog(this)
             dialog.showDialog()
 //            val intent = Intent(applicationContext, FormActivity::class.java)
@@ -125,14 +122,12 @@ class MainActivity : AppCompatActivity() {
         var strContact = devicePrefs.getString("deviceList", "")
         // list 형태로 변환
         var datas : ArrayList<DeviceData> = makeGson.fromJson(strContact,listType.type)
-        Log.e("prefdata",datas.toString())
         return datas
     }
     private fun putPrefData(putDatas : ArrayList<DeviceData>) {
         var makeGson = GsonBuilder().create()
         // 저장 타입 지정
         var listType : TypeToken<MutableList<DeviceData>> = object : TypeToken<MutableList<DeviceData>>() {}
-        Log.e("put",putDatas.toString())
         // 데이터를 Json 형태로 변환
         var strContact = makeGson.toJson(putDatas, listType.type)
         // Json 으로 변환한 객체 저장
