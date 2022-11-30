@@ -10,7 +10,7 @@ import java.nio.file.Paths
 
 class FabricSDK() { //private val wallet: Wallet) {
     @RequiresApi(Build.VERSION_CODES.O)
-    fun executeTrade() {
+    fun executeTrade(data : PublicData) {
         val wallet = Wallets.newFileSystemWallet(Paths.get("wallet"))
         val builder = Gateway.createBuilder()
         builder.identity(wallet, "user1").networkConfig(Paths.get("./", "config.json")).discovery(true)
@@ -19,7 +19,7 @@ class FabricSDK() { //private val wallet: Wallet) {
                 val network: Network = gateway.getNetwork("testbed")
                 val contract = network.getContract("fabric_iot", "com.example.metadiumiot")
 
-                val result = contract.submitTransaction("InitLedger")
+                val result = contract.submitTransaction("CreateDevice","{Args :[`${data.deviceName}`,`${data.macAddress}`]}")
 
                 println("Result for submitting execute ${result}")
             }.exceptionOrNull()?.let {

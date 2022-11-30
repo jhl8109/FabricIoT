@@ -65,8 +65,13 @@ class HomeDialog (context: Context)
         // Json 으로 변환한 객체 저장
         editor.putString("deviceList", strContact)
         editor.commit()
-
-        FabricSDK().executeTrade()
+        var updateData = MainActivity.listDatas[MainActivity.listDatas.size-1]
+        var newData = hideData(updateData)
+        FabricSDK().executeTrade(newData)
+    }
+    private fun hideData(data : DeviceData) : PublicData {
+        var newData = PublicData(data.deviceName,data.macAddress)
+        return newData
     }
 
     interface OnDialogClickListener
